@@ -25,8 +25,14 @@ class Predator extends Bird{
 	}
 	
 	void updateVelocity(){
-		ArrayList<Bird> neighbors = getNeighbors(this, 200, 3*HALF_PI);
+		if(predators.size() > 1){
+			PVector closestDisplacement = getClosestBird(this, predators);
+			PVector velocityChangeFromCollisionAviodance = closestDisplacement.setMag(1/closestDisplacement.mag());
+			velocityChangeFromCollisionAviodance.mult(-1);
+			velocity.add(closestDisplacement.mult(parameters[8]));
+		}
 		
+		ArrayList<Bird> neighbors = getNeighbors(this, parameters[10], parameters[9]);
 		PVector averageDisplacement = new PVector();
 		for(Bird b : neighbors){
 			PVector displacement = PVector.sub(b.position, position);
@@ -44,7 +50,7 @@ class Predator extends Bird{
 			averageDisplacement = new PVector(0, 0);			
 		}
 		
-		velocity.add(averageDisplacement.mult(0.005));
+		velocity.add(averageDisplacement.mult(parameters[7]/parameters[10]));
 				
 		if(velocity.mag() > 5){
 			velocity.setMag(velocity.mag() - (velocity.mag() - 5)*0.2);

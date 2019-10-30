@@ -34,7 +34,7 @@ class Bird{
 	
 	void updateVelocity(){
 		//avoid collision
-		PVector closestDisplacement = getClosestBird(this);
+		PVector closestDisplacement = getClosestBird(this, birds);
 		PVector velocityChangeFromCollisionAviodance = closestDisplacement.setMag(1/closestDisplacement.mag());
 		velocityChangeFromCollisionAviodance.mult(-1);
 		
@@ -77,7 +77,7 @@ class Bird{
 		
 		//predator avoidance
 		if(predators.size() > 0){
-			PVector predatorDisplacement = getClosestPredator(this);
+			PVector predatorDisplacement = getClosestBird(this, predators);
 			PVector velocityChangeFromPredatorAviodance = predatorDisplacement.setMag(1/predatorDisplacement.mag());
 			velocityChangeFromPredatorAviodance.mult(-1);
 			velocity.add(velocityChangeFromPredatorAviodance.mult(parameters[0]));
@@ -86,7 +86,7 @@ class Bird{
 		velocity.add(velocityChangeFromCollisionAviodance.mult(parameters[1]));
 		velocity.rotate(directionChangeFromHeadingMatching*parameters[2]);
 		velocity.setMag(velocity.mag() + magnitudeChangeFromHeadingMatching*parameters[3]);
-		velocity.add(averageDisplacement.mult(parameters[4]));
+		velocity.add(averageDisplacement.mult(parameters[4]/parameters[6]));
 
 		
 		if(velocity.mag() > 5){

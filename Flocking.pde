@@ -3,7 +3,7 @@ Random rand = new Random();
 
 public ArrayList<Bird> birds = new ArrayList<Bird>();
 public ArrayList<Predator> predators = new ArrayList<Predator>();
-public float[] parameters = new float[10];
+public float[] parameters = new float[11];
 
 void setup(){
 	size(700, 700);
@@ -41,32 +41,21 @@ Bird createRandomBird(){
 	return b;
 }
 
-PVector getClosestBird(Bird thisBird){
+<T extends Bird> PVector getClosestBird(Bird thisBird, ArrayList<T> list){
 	PVector closestDisplacement = new PVector(width, height);
-	for(Bird b : birds){
+	for(Bird b : list){
 		PVector displacement = PVector.sub(b.position, thisBird.position);
 		if(displacement.x > width/2){
 			displacement.x -= width;
 		}
-		if(displacement.y > height/2){
-			displacement.y -= height;
-		}
-		if(displacement.mag() < closestDisplacement.mag() && displacement.mag() > 0){
-			closestDisplacement = displacement;
-		}
-	}
-	return closestDisplacement;
-}
-
-PVector getClosestPredator(Bird thisBird){
-	PVector closestDisplacement = new PVector(width, height);
-	for(Predator p : predators){
-		PVector displacement = PVector.sub(p.position, thisBird.position);
-		if(displacement.x > width/2){
-			displacement.x -= width;
+		if(displacement.x < -width/2){
+			displacement.x += width;
 		}
 		if(displacement.y > height/2){
 			displacement.y -= height;
+		}
+		if(displacement.y < -height/2){
+			displacement.y += height;
 		}
 		if(displacement.mag() < closestDisplacement.mag() && displacement.mag() > 0){
 			closestDisplacement = displacement;
@@ -110,7 +99,7 @@ void updateParameters(){
 	BufferedReader input = createReader("Flocking Parameters.txt");
 	
 	try{
-		for(int i = 0; i < 10; i++){
+		for(int i = 0; i < parameters.length; i++){
 			String data = input.readLine();
 			int colonIndex = data.indexOf(':');
 			data = data.substring(colonIndex + 1, data.length()).trim();

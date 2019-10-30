@@ -15,5 +15,6 @@ Parameter List:
 	Bird FOV - the angle, centered directly in front of it, each bird can see other birds in (0 - 6.28)
 	Bird Sight Range - how far away birds can see
 	Predator Attraction - how strongly predators will try to move towards nearby birds
+	Predator Collision Avoidance - how strongly predators will avoid other predators
 	Predator FOV - the angle, centered directly in front of it, each predator can see birds in (0 - 6.28)
 	Predator Sight Range - how far away predators can see
