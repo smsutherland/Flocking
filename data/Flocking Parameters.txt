@@ -1,0 +1,10 @@
+Predator Avoidance: 40
+Collision Avoidance: 6
+Heading Matching: 0.08
+Speed Matching: 0.005
+Center Seeking: 0.01
+Bird FOV: 2
+Bird Sight Range: 70
+Predator Attraction: 0.005
+Predator FOV: 4.71238898038
+Predator Sight Range: 200
